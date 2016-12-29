@@ -25,25 +25,28 @@
     var sprites = [];
     var cursors;
 
+    /**
     var player = function(x,y,socketid){
         this.x = x;
         this.y = y;
         this.socketid = socketid;
 
     }
+     **/
 
     function preload() {
-        console.log("starting preload");
+        //console.log("starting preload");
         game.load.crossOrigin = 'anonymous';
-        game.load.image('phaser', './assets/phaser-dude.png');
+        //game.load.image('phaser', './assets/dude.png');
+        game.load.spritesheet('phaser', 'assets/dude.png', 64, 64)
 
-        console.log("ending preload");
+        //console.log("ending preload");
 
     }
 
     function create() {
 
-        console.log("create");
+        //console.log("create");
         //game.physics.startSystem(Phaser.Physics.P2JS);
         var style = { font: "170px Arial", fill: "#ff0000" };
         var label_A = game.add.text(150, 70, 'A', style);
@@ -66,11 +69,6 @@
         var keysMsg = game.add.text(240, 50, '*or use the arrow keys on your computer', style);
 
 
-
-
-
-
-
         //add white text explaining where to click to move
 
 
@@ -87,13 +85,22 @@
         //document.getElementById("p1").innerHTML = "My id:" + mystr.substring(0,4);
 
         players = data;
-        console.log("server knows phaser create initiated");
+        //console.log("server knows phaser create initiated");
 
         if (sprites.length == 0)
         {
             for (i = 0; i < players.length; i++) {
 
                 sprite = game.add.sprite(players[i].x, players[i].y, 'phaser');
+
+
+                //sprite.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7], 20, true);
+                sprite.animations.add('move', [1,2], 10, true);
+                sprite.animations.add('stop', [3], 10, true);
+
+                sprite.anchor.setTo(0.5, 0.5);
+                //sprite.play('stop');
+                sprite.frame = 5;
 
                 /**
                 var style = { font: "20px Arial", fill: "#ffffff" };
@@ -108,16 +115,25 @@
                 //sprite.body.fixedRotation = true;
                 //sprite.body.setZeroVelocity();
                 if (sprite.socketid == socket.id){
-                    sprite.tint = 0xff0000;
+                    sprite.tint = 0.5 * 0xffffff;
                 }
 
                 sprites.push(sprite);
-                console.log(sprite.socketid);
+                //console.log(sprite.socketid);
             }
         }
         else{
-            sprite = game.add.sprite(players[players.length - 1].x, players[players.length - 1].y, 'phaser');
+            sprite = game.add.sprite(players[players.length - 1].x, players[players.length - 1].y,'phaser');
             sprite.socketid = players[players.length - 1].socketid;
+
+            //sprite.animations.add('move', [0, 1, 2, 3, 4, 5, 6, 7], 20, true);
+            sprite.animations.add('move', [1,2], 10, true);
+            sprite.animations.add('stop', [3], 10, true);
+
+            sprite.anchor.setTo(0.5, 0.5);
+            //sprite.play('stop');
+
+            sprite.frame = 5;
 
             /**
             var style = { font: "20px Arial", fill: "#ffffff" };
@@ -130,10 +146,10 @@
             //sprite.body.fixedRotation = true;
             //sprite.body.setZeroVelocity();
             if (sprite.socketid == socket.id){
-                sprite.tint = 0xff0000;
+                sprite.tint = 0.5 * 0xffffff;
             }
             sprites.push(sprite);
-            console.log(sprite.socketid);
+            //console.log(sprite.socketid);
         }
 
 
@@ -141,21 +157,69 @@
     });
 
     socket.on('update',function(data){
-        players = data;
+        if (data === []){
+            //console.log("data is [] so now sprites is []")
+            sprites = [];
+        }
+        else {
+            //console.log("data is not empty");
+            players = data;
+        }
+
 
         for(i=0;i<players.length;i++){
-            for(i=0;i<players.length;i++){
-                sprites[i].x = players[i].x;
-                sprites[i].y = players[i].y;
 
+
+            if (sprites[i].x != players[i].x || sprites[i].y != players[i].y){
+                //sprites[i].play('move');
+                sprites[i].frame = 1;
+
+                //function changeFrame(sprites,i){
+                //    sprites[i].frame = 3;
+                //}
+
+                var mySprite = sprites[i];
+
+                setTimeout(function(){mySprite.frame = 5;}, 200);
 
             }
 
+            sprites[i].x = players[i].x;
+            sprites[i].y = players[i].y;
+            sprites[i].angle = players[i].angle;
+            //sprites[i].angle = players[i].angle;
+
+
+
         }
+
+
     });
 
     function update() {
         //console.log(players);
+
+        /**
+        for(i=0;i<players.length;i++){
+            console.log(sprites[i].x + ' ' + players[i].x);
+            console.log(sprites[i].y + ' ' + players[i].y);
+            console.log(sprites[i]);
+
+             if (sprites[i].x != players[i].x || sprites[i].y != players[i].y){
+                //sprites[i].play('move');
+                 sprite.frame = 0;
+            }
+             else{
+                //sprites[i].play('stop');
+                 sprite.frame = 3;
+            }
+
+            console.log(sprites[i].x + ' ' + players[i].x);
+            console.log(sprites[i].y + ' ' + players[i].y);
+            console.log(sprites[i]);
+
+        }
+         **/
 
         //sprite.body.setZeroVelocity();
 

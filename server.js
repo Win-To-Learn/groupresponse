@@ -18,28 +18,30 @@ app.get('/', function(req, res){
 
 var players = [];
 
-var player = function(x,y,socketid){
+var player = function(x,y,angle,socketid){
     this.x = x;
     this.y = y;
+    this.angle = 0;
     this.socketid = socketid;
     
 }
 
+//placeholder - this function will just loop through players looking for a matching socket id
 var idLookup = function(id,playersArray){
     
 }
 
 
 io.on('connection', function(socket) {
-    console.log('connection');
-    console.log('here is the socket id:' + socket.id);
+    //console.log('connection');
+    //console.log('here is the socket id:' + socket.id);
     
     socket.on('phaser create function initiated', function(msg){
         
-        newplayer = new player(400,100,socket.id);
+        newplayer = new player(400,100,0,socket.id);
         players.push(newplayer);
         io.emit('server knows phaser create initiated', players);
-        console.log(players);
+        //console.log(players);
         
     });
 
@@ -47,6 +49,7 @@ io.on('connection', function(socket) {
         for(i=0;i<players.length;i++){
             if(players[i].socketid == msg){
                 players[i].x -= 5;
+                players[i].angle = 180;
             }
         }
         io.emit('update',players);
@@ -56,6 +59,7 @@ io.on('connection', function(socket) {
         for(i=0;i<players.length;i++){
             if(players[i].socketid == msg){
                 players[i].x += 5;
+                players[i].angle = 0;
             }
         }
         io.emit('update',players);
@@ -65,6 +69,7 @@ io.on('connection', function(socket) {
         for(i=0;i<players.length;i++){
             if(players[i].socketid == msg){
                 players[i].y -= 5;
+                players[i].angle = 270;
             }
         }
         io.emit('update',players);
@@ -74,6 +79,7 @@ io.on('connection', function(socket) {
         for(i=0;i<players.length;i++){
             if(players[i].socketid == msg){
                 players[i].y += 5;
+                players[i].angle = 90;
             }
         }
         io.emit('update',players);
@@ -85,6 +91,17 @@ io.on('connection', function(socket) {
                 players[i].x = -999;
                 players[i].y = -999;
             }
+        }
+        var disconnectedUsers = 0;
+        for(i=0;i<players.length;i++){
+            if(players[i].x == -999){
+                disconnectedUsers++;
+            }
+
+        }
+        if(disconnectedUsers == players.length){
+            //console.log("players.length:" + players.length + " disconnected users:" + disconnectedUsers)
+            players = [];
         }
         io.emit('update',players);
 
