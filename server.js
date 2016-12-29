@@ -12,6 +12,12 @@ var http = require('http');
 var server = http.Server(app);
 var io = require('socket.io')(server);
 
+//var io = require('socket.io')({
+//    transports  : [ 'websocket' ]
+//});
+
+//io(server);
+
 app.get('/', function(req, res){
     res.sendfile('index.html');
 });
