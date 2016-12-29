@@ -23,6 +23,14 @@
 
     var socket = io();
 
+    socket.configure(function() {
+        // Only use WebSockets
+        socket.set("transports", ["websocket"]);
+
+        // Restrict log output
+        //socket.set("log level", 2);
+    });
+
     var players = [];
     var sprites = [];
     var cursors;
