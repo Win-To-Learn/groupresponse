@@ -19,6 +19,8 @@
 <script>
 
     var game = new Phaser.Game(800, 800, Phaser.AUTO, '', { preload: preload, create: create, update: update})
+    game.stage.backgroundColor = "#ccffff";
+
     var socket = io();
 
     var players = [];
