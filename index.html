@@ -19,13 +19,15 @@
 <script>
 
     var game = new Phaser.Game(800, 800, Phaser.AUTO, '', { preload: preload, create: create, update: update})
-    //game.stage.backgroundColor = "#ccffff";
+
 
     var socket = io();
 
     var players = [];
     var sprites = [];
     var cursors;
+
+    var spriteTint = 0.4 * 0xffffff;
 
     /**
     var player = function(x,y,socketid){
@@ -47,6 +49,8 @@
     }
 
     function create() {
+
+        game.stage.backgroundColor = "#4488AA";
 
         //console.log("create");
         //game.physics.startSystem(Phaser.Physics.P2JS);
@@ -116,8 +120,8 @@
                 //sprite.body.setZeroDamping();
                 //sprite.body.fixedRotation = true;
                 //sprite.body.setZeroVelocity();
-                if (sprite.socketid == socket.id){
-                    sprite.tint = 0.5 * 0xffffff;
+                if (sprite.socketid != socket.id){
+                    sprite.tint = spriteTint;
                 }
 
                 sprites.push(sprite);
@@ -147,8 +151,8 @@
             //sprite.body.setZeroDamping();
             //sprite.body.fixedRotation = true;
             //sprite.body.setZeroVelocity();
-            if (sprite.socketid == socket.id){
-                sprite.tint = 0.5 * 0xffffff;
+            if (sprite.socketid != socket.id){
+                sprite.tint = spriteTint;
             }
             sprites.push(sprite);
             //console.log(sprite.socketid);
