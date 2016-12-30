@@ -27,7 +27,7 @@
     var sprites = [];
     var cursors;
 
-    var spriteTint = 0.4 * 0xffffff;
+    var spriteTint = 0.81 * 0xff0000;
 
     /**
     var player = function(x,y,socketid){
@@ -50,7 +50,7 @@
 
     function create() {
 
-        game.stage.backgroundColor = "#4488AA";
+        game.stage.backgroundColor = "#e6f2ff";
 
         //console.log("create");
         //game.physics.startSystem(Phaser.Physics.P2JS);
@@ -63,7 +63,7 @@
         var style = { font: "170px Arial", fill: "#ffff00"};
         var label_D = game.add.text(550, 460, 'D', style);
 
-        var style = { font: "32px Arial", fill: "#ffffff"};
+        var style = { font: "32px Arial", fill: "#000000"};
         var leftMsg = game.add.text(20, 610, 'PRESS HERE TO MOVE LEFT', style);
         leftMsg.angle = -90;
         var rightMsg = game.add.text(770, 160, 'PRESS HERE TO MOVE RIGHT', style);
@@ -71,7 +71,7 @@
         var upMsg = game.add.text(190, 10, 'PRESS HERE TO MOVE UP', style);
 
         var downMsg = game.add.text(165, 660, 'PRESS HERE TO MOVE DOWN', style);
-        var style = { font: "16px Arial", fill: "#ffffff"};
+        var style = { font: "16px Arial", fill: "#000000"};
         var keysMsg = game.add.text(240, 50, '*or use the arrow keys on your computer', style);
 
 
