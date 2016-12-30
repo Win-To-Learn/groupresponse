@@ -27,7 +27,7 @@
     var sprites = [];
     var cursors;
 
-    var spriteTint = 0.81 * 0xff0000;
+    var spriteTint = 0x797b7f;
 
     /**
     var player = function(x,y,socketid){
@@ -108,20 +108,28 @@
                 //sprite.play('stop');
                 sprite.frame = 5;
 
-                /**
-                var style = { font: "20px Arial", fill: "#ffffff" };
-                var str = players[i].socketid;
-                var label_score = game.add.text(0, -20, str.substring(0,4), style);
-                sprite.addChild(label_score);
-                 **/
+
+                var style = { font: "20px Arial", fill: "#ff0000" };
+                //var str = players[i].socketid;
+
+                //var label_score = game.add.text(0, -20, str.substring(0,4), style);
+
+                var label_score = game.add.text(0, -20, 'ME', style);
+
+                //sprite.addChild(label_score);
+
 
                 sprite.socketid = players[i].socketid;
                 //game.physics.p2.enable(sprite);
                 //sprite.body.setZeroDamping();
                 //sprite.body.fixedRotation = true;
                 //sprite.body.setZeroVelocity();
-                if (sprite.socketid != socket.id){
-                    sprite.tint = spriteTint;
+                sprite.tint = Math.random()*0xffffff;
+
+                if (sprite.socketid == socket.id){
+                    //sprite.tint = spriteTint;
+
+                    sprite.addChild(label_score);
                 }
 
                 sprites.push(sprite);
@@ -141,19 +149,26 @@
 
             sprite.frame = 5;
 
-            /**
+
             var style = { font: "20px Arial", fill: "#ffffff" };
             var str = players[i].socketid;
-            var label_score = game.add.text(0, -20, str.substring(0,4), style);
-            sprite.addChild(label_score);
-             **/
+            //var label_score = game.add.text(0, -20, str.substring(0,4), style);
+
+            var label_score = game.add.text(0, -20, 'ME', style);
+            //sprite.addChild(label_score);
+
             //game.physics.p2.enable(sprite);
             //sprite.body.setZeroDamping();
             //sprite.body.fixedRotation = true;
             //sprite.body.setZeroVelocity();
-            if (sprite.socketid != socket.id){
-                sprite.tint = spriteTint;
+            sprite.tint = Math.random()*0xffffff;
+
+            if (sprite.socketid == socket.id){
+                //sprite.tint = spriteTint;
+
+                sprite.addChild(label_score);
             }
+
             sprites.push(sprite);
             //console.log(sprite.socketid);
         }
@@ -186,7 +201,7 @@
 
                 var mySprite = sprites[i];
 
-                setTimeout(function(){mySprite.frame = 5;}, 200);
+                setTimeout(function(){mySprite.frame = 5;}, 150 + Math.random()*50);
 
             }
 
